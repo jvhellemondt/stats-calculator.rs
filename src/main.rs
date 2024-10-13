@@ -13,24 +13,36 @@ struct StatsCalculator;
 #[derive(Debug, PartialEq)]
 struct StatsSummary {
     min_value: i32,
+    max_value: i32,
 }
 
 impl StatsCalculator {
-    fn get_min_value(input: Vec<i32>) -> i32 {
+    fn get_min_value(input: &Vec<i32>) -> i32 {
         let mut min_value: i32 = input[0];
-        for &i in &input {
+        for &i in input {
             if i < min_value {
                 min_value = i;
             }
         }
         min_value
     }
+    fn get_max_value(input: Vec<i32>) -> i32 {
+        let mut max_value: i32 = input[0];
+        for i in input {
+            if i > max_value {
+                max_value = i;
+            }
+        }
+        max_value
+    }
 
     pub fn summarize(input: Vec<i32>) -> Result<StatsSummary, StatsCalculatorErrors> {
         if input.is_empty() { return Err(StatsCalculatorErrors::NoValues); };
         let min_value = StatsCalculator::get_min_value(&input);
+        let max_value = StatsCalculator::get_max_value(input);
         Ok(StatsSummary {
             min_value,
+            max_value
         })
     }
 }
@@ -53,8 +65,19 @@ mod tests {
     }
 
     #[rstest]
-    #[case(vec![1, 2, 3, 4, 5], StatsSummary {min_value: 1 })]
-    #[case(vec![3, 2, 4, 5], StatsSummary {min_value: 2 })]
+    fn it_should_provide_a_summary_of_the_stats() {
+        let input = vec![1, 2, 10, 4, 5];
+        let summary = StatsCalculator::summarize(input);
+        let expected = StatsSummary {
+            min_value: 1,
+            max_value: 10,
+        };
+        assert_eq!(summary, Ok(expected));
+    }
+
+    #[rstest]
+    #[case(vec![1, 2, 3, 4, 5], StatsSummary {min_value: 1,max_value: 5 })]
+    #[case(vec![3, 2, 4, 5], StatsSummary {min_value: 2,max_value: 5 })]
     fn it_should_calculate_the_minimum_value(#[case] input: Vec<i32>, #[case] expected: StatsSummary) {
         let result = StatsCalculator::summarize(input);
         assert_eq!(result, Ok(expected));
