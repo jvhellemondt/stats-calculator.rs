@@ -11,18 +11,19 @@ enum StatsCalculatorErrors {
 struct StatsCalculator;
 
 impl StatsCalculator {
-    fn calculate(input: Vec<i32>) -> Result<i32, StatsCalculatorErrors> {
-        if input.is_empty() {
-            return Err(StatsCalculatorErrors::NoValues);
-        }
-
+    fn get_min_value(input: Vec<i32>) -> i32 {
         let mut min_value: i32 = input[0];
-
         for &i in &input {
             if i < min_value {
                 min_value = i;
             }
         }
+        min_value
+    }
+
+    pub fn calculate(input: Vec<i32>) -> Result<i32, StatsCalculatorErrors> {
+        if input.is_empty() { return Err(StatsCalculatorErrors::NoValues); };
+        let min_value = StatsCalculator::get_min_value(input);
         Ok(min_value)
     }
 }
@@ -45,16 +46,10 @@ mod tests {
     }
 
     #[rstest]
-    fn it_should_calculate_that_the_minimum_value_in_the_range_1_2_3_4_5_is_1() {
-        let input = vec![1, 2, 3, 4, 5];
+    #[case(vec![1, 2, 3, 4, 5], 1)]
+    #[case(vec![3, 2, 4, 5], 2)]
+    fn it_should_calculate_the_minimum_value(#[case] input: Vec<i32>, #[case] expected: i32) {
         let result = StatsCalculator::calculate(input);
-        assert_eq!(result, Ok(1));
-    }
-
-    #[rstest]
-    fn it_should_calculate_that_the_minimum_value_in_the_range_3_2_4_5_is_2() {
-        let input = vec![3, 2, 4, 5];
-        let result = StatsCalculator::calculate(input);
-        assert_eq!(result, Ok(2));
+        assert_eq!(result, Ok(expected));
     }
 }
