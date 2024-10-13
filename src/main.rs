@@ -39,6 +39,12 @@ mod tests {
     }
 
     #[rstest]
+    fn it_should_validate_that_values_are_given() {
+        let result = StatsCalculator::calculate(vec![]);
+        assert_eq!(result, Err(StatsCalculatorErrors::NoValues));
+    }
+
+    #[rstest]
     fn it_should_calculate_that_the_minimum_value_in_the_range_1_2_3_4_5_is_1() {
         let input = vec![1, 2, 3, 4, 5];
         let result = StatsCalculator::calculate(input);

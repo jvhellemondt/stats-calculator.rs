@@ -101,6 +101,9 @@ cargo install --locked bacon
 
 ### SPECIFY
 
+- it_should_be_defined
+- it_should_validate_that_values_are_given
+
 - it_should_calculate_that_the_minimum_value_in_the_range_[1,2,3,4,5]_is_1
 - it_should_calculate_that_the_minimum_value_in_the_range_[3,2,4,5]_is_2
 
