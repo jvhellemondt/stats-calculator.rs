@@ -10,6 +10,11 @@ enum StatsCalculatorErrors {
 #[derive(Debug, PartialEq)]
 struct StatsCalculator;
 
+#[derive(Debug, PartialEq)]
+struct StatsSummary {
+    min_value: i32,
+}
+
 impl StatsCalculator {
     fn get_min_value(input: Vec<i32>) -> i32 {
         let mut min_value: i32 = input[0];
