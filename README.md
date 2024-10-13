@@ -42,13 +42,38 @@ Input: `[1,2,3,4,5,6,7,8]`. Output: `8`
 - Input: `[2, 4, 6, 8, 10]`. Output: `6`
 - Input: `[1,2,3,7]`. Output: `3,25`
 
+#### Returns StatsSummary
+
+- Input: `[2, 4, 6, 8, 10]`. 
+- Output:
+```rust
+StatsSummary {
+  min_value: 2,
+  max_value: 10,
+  average: 6,
+  num_of_elements: 5 
+}
+```
+
+- Input: `[1, 2, 3, 7]`. 
+- Output:
+
+```rust
+StatsSummary {
+  min_value: 1,
+  max_value: 7,
+  average: 3.25,
+  num_of_elements: 4
+}
+```
+
 ### ARCHITECT
 
 _Flowchart_
 ```mermaid
 flowchart TD
     A[Input: Vec<i32>] -->|input range| B((Stats Calculator))
-    B --> C[Output: StatsResult]
+    B --> C[Output: StatsSummary]
     C --> D[min_value: i32]
     C --> E[max_value: i32]
     C --> F[average: f32]
@@ -59,9 +84,9 @@ _Class diagram_
 ```mermaid
 classDiagram
     class StatsCalculator {
-        +calculate(range: Vec<i32>): StatsResult
+        +calculate(range: Vec<i32>): StatsSummary
     }
-    class StatsResult {
+    class StatsSummary {
         +min_value: i32
         +max_value: i32
         +average: f32
@@ -70,7 +95,7 @@ classDiagram
 
     Input: Vec<i32>
     Input --> StatsCalculator: input
-    StatsCalculator --> StatsResult: output
+    StatsCalculator --> StatsSummary: output
 ```
 
 _Sequence diagram_
@@ -78,11 +103,11 @@ _Sequence diagram_
 sequenceDiagram
     participant User
     participant StatsCalculator
-    participant StatsResult
+    participant StatsSummary
     
     User ->> StatsCalculator: provide Vec<i32>
-    StatsCalculator -->> StatsResult: StatsResult::new(...)
-    StatsCalculator -->> User: return StatsResult
+    StatsCalculator -->> StatsSummary: StatsSummary::new(...)
+    StatsCalculator -->> User: return StatsSummary
 ```
 
 ### AUTOMATE
@@ -103,6 +128,7 @@ cargo install --locked bacon
 
 - it_should_be_defined
 - it_should_validate_that_values_are_given
+- it_should_provide_a_summary_of_the_stats
 
 - it_should_calculate_that_the_minimum_value_in_the_range_1_2_3_4_5_is_1
 - it_should_calculate_that_the_minimum_value_in_the_range_3_2_4_5_is_2
