@@ -14,6 +14,7 @@ struct StatsCalculator;
 struct StatsSummary {
     min_value: i32,
     max_value: i32,
+    average: f32,
     amount_of_elements: usize
 }
 
@@ -37,6 +38,11 @@ impl StatsCalculator {
         max_value
     }
 
+    fn calculate_average(input: &Vec<i32>) -> f32 {
+        let sum = input.iter().fold(0, |acc, x| acc + x);
+        sum as f32 / input.len() as f32
+    }
+
     fn calculate_amount_of_elements(input: Vec<i32>) -> usize {
         input.len()
     }
@@ -45,10 +51,12 @@ impl StatsCalculator {
         if input.is_empty() { return Err(StatsCalculatorErrors::NoValues); };
         let min_value = StatsCalculator::get_min_value(&input);
         let max_value = StatsCalculator::get_max_value(&input);
+        let average = StatsCalculator::calculate_average(&input);
         let amount_of_elements = StatsCalculator::calculate_amount_of_elements(input);
         Ok(StatsSummary {
             min_value,
             max_value,
+            average,
             amount_of_elements
         })
     }
@@ -72,9 +80,11 @@ mod tests {
     }
 
     #[rstest]
-    #[case(vec![1, 2, 3, 4, 5], StatsSummary {min_value: 1,max_value: 5, amount_of_elements: 5 })]
-    #[case(vec![3, 2, 4, 5], StatsSummary {min_value: 2,max_value: 5, amount_of_elements: 4 })]
-    fn it_should_calculate_the_minimum_value(#[case] input: Vec<i32>, #[case] expected: StatsSummary) {
+    #[case(vec![1, 2, 3, 4, 5], StatsSummary {min_value: 1,max_value: 5, amount_of_elements: 5, average: 3.0 })]
+    #[case(vec![3, 2, 4, 5], StatsSummary {min_value: 2,max_value: 5, amount_of_elements: 4, average: 3.5 })]
+    #[case(vec![2, 4,6 ,8, 10], StatsSummary {min_value: 2,max_value: 10, amount_of_elements: 5, average: 6.0 })]
+    #[case(vec![1, 2, 3, 7], StatsSummary {min_value: 1,max_value: 7, amount_of_elements: 4, average: 3.25 })]
+    fn it_should_summarize(#[case] input: Vec<i32>, #[case] expected: StatsSummary) {
         let result = StatsCalculator::summarize(input);
         assert_eq!(result, Ok(expected));
     }
