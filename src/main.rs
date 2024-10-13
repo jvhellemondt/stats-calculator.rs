@@ -65,17 +65,6 @@ mod tests {
     }
 
     #[rstest]
-    fn it_should_provide_a_summary_of_the_stats() {
-        let input = vec![1, 2, 10, 4, 5];
-        let summary = StatsCalculator::summarize(input);
-        let expected = StatsSummary {
-            min_value: 1,
-            max_value: 10,
-        };
-        assert_eq!(summary, Ok(expected));
-    }
-
-    #[rstest]
     #[case(vec![1, 2, 3, 4, 5], StatsSummary {min_value: 1,max_value: 5 })]
     #[case(vec![3, 2, 4, 5], StatsSummary {min_value: 2,max_value: 5 })]
     fn it_should_calculate_the_minimum_value(#[case] input: Vec<i32>, #[case] expected: StatsSummary) {
