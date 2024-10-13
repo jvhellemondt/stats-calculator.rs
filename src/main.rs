@@ -26,10 +26,12 @@ impl StatsCalculator {
         min_value
     }
 
-    pub fn calculate(input: Vec<i32>) -> Result<i32, StatsCalculatorErrors> {
+    pub fn summarize(input: Vec<i32>) -> Result<StatsSummary, StatsCalculatorErrors> {
         if input.is_empty() { return Err(StatsCalculatorErrors::NoValues); };
-        let min_value = StatsCalculator::get_min_value(input);
-        Ok(min_value)
+        let min_value = StatsCalculator::get_min_value(&input);
+        Ok(StatsSummary {
+            min_value,
+        })
     }
 }
 
@@ -46,15 +48,15 @@ mod tests {
 
     #[rstest]
     fn it_should_validate_that_values_are_given() {
-        let result = StatsCalculator::calculate(vec![]);
+        let result = StatsCalculator::summarize(vec![]);
         assert_eq!(result, Err(StatsCalculatorErrors::NoValues));
     }
 
     #[rstest]
-    #[case(vec![1, 2, 3, 4, 5], 1)]
-    #[case(vec![3, 2, 4, 5], 2)]
-    fn it_should_calculate_the_minimum_value(#[case] input: Vec<i32>, #[case] expected: i32) {
-        let result = StatsCalculator::calculate(input);
+    #[case(vec![1, 2, 3, 4, 5], StatsSummary {min_value: 1 })]
+    #[case(vec![3, 2, 4, 5], StatsSummary {min_value: 2 })]
+    fn it_should_calculate_the_minimum_value(#[case] input: Vec<i32>, #[case] expected: StatsSummary) {
+        let result = StatsCalculator::summarize(input);
         assert_eq!(result, Ok(expected));
     }
 }
