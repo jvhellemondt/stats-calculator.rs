@@ -104,17 +104,17 @@ cargo install --locked bacon
 - it_should_be_defined
 - it_should_validate_that_values_are_given
 
-- it_should_calculate_that_the_minimum_value_in_the_range_[1,2,3,4,5]_is_1
-- it_should_calculate_that_the_minimum_value_in_the_range_[3,2,4,5]_is_2
+- it_should_calculate_that_the_minimum_value_in_the_range_1_2_3_4_5_is_1
+- it_should_calculate_that_the_minimum_value_in_the_range_3_2_4_5_is_2
 
-- it_should_calculate_that_the_maximum_value_in_the_range_[1,2,3,4,5]_is_5
-- it_should_calculate_that_the_maximum_value_in_the_range_[1,2,10,4,5]_is_10
+- it_should_calculate_that_the_maximum_value_in_the_range_1_2_3_4_5_is_5
+- it_should_calculate_that_the_maximum_value_in_the_range_1_2_10_4_5_is_10
 
-- it_should_calculate_that_the_amount_of_elements_in_the_range_[1,2,3,4,5]_is_5
-- it_should_calculate_that_the_amount_of_elements_in_the_range_[1,2,3,4,5,6,7,8]_is_8
+- it_should_calculate_that_the_amount_of_elements_in_the_range_1_2_3_4_5_is_5
+- it_should_calculate_that_the_amount_of_elements_in_the_range_1_2_3_4_5_6_7_8_is_8
 
-- it_should_calculate_that_the_average_in_the_range_[2,4,6,8,10]_is_6
-- it_should_calculate_that_the_average_in_the_range_[1,2,3,7]_is_3,25
+- it_should_calculate_that_the_average_in_the_range_2_4_6_8_10_is_6
+- it_should_calculate_that_the_average_in_the_range_1_2_3_7_is_3_25
 
 ### TEST
 
